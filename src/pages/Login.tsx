@@ -16,24 +16,42 @@ import {
 } from "@/components/ui/select";
 
 const Login = () => {
-  const { register, handleSubmit, formState: { errors }, watch } = useForm();
+  const { register, handleSubmit, formState: { errors } } = useForm();
   const { toast } = useToast();
   const navigate = useNavigate();
   const [userType, setUserType] = React.useState('applicant');
 
   const onSubmit = (data) => {
-    if (userType === 'admin' && data.email === 'admin@example.com' && data.password === 'admin123') {
-      localStorage.setItem('userRole', 'admin');
-      navigate('/admin/dashboard');
+    // Demo credentials for testing
+    const credentials = {
+      admin: {
+        email: 'admin@example.com',
+        password: 'admin123'
+      },
+      applicant: {
+        email: 'user@example.com',
+        password: 'user123'
+      }
+    };
+
+    const isValidCredentials = userType === 'admin' 
+      ? (data.email === credentials.admin.email && data.password === credentials.admin.password)
+      : (data.email === credentials.applicant.email && data.password === credentials.applicant.password);
+
+    if (isValidCredentials) {
+      localStorage.setItem('userRole', userType);
+      navigate(userType === 'admin' ? '/admin/dashboard' : '/applicant/dashboard');
+      toast({
+        title: "Login Successful",
+        description: "Welcome back!",
+      });
     } else {
-      localStorage.setItem('userRole', 'applicant');
-      navigate('/applicant/dashboard');
+      toast({
+        title: "Login Failed",
+        description: "Invalid credentials. Please try again.",
+        variant: "destructive"
+      });
     }
-    
-    toast({
-      title: "Login Successful",
-      description: "Welcome back!",
-    });
   };
 
   return (
@@ -73,6 +91,7 @@ const Login = () => {
                   type="email"
                   {...register("email", { required: true })}
                   className={errors.email ? "border-red-500" : ""}
+                  placeholder={userType === 'admin' ? 'admin@example.com' : 'user@example.com'}
                 />
                 {errors.email && (
                   <p className="text-red-500 text-sm mt-1">Email is required</p>
@@ -86,6 +105,7 @@ const Login = () => {
                   type="password"
                   {...register("password", { required: true })}
                   className={errors.password ? "border-red-500" : ""}
+                  placeholder={userType === 'admin' ? 'admin123' : 'user123'}
                 />
                 {errors.password && (
                   <p className="text-red-500 text-sm mt-1">Password is required</p>
@@ -96,6 +116,15 @@ const Login = () => {
                 <Button type="submit" className="w-full btn-primary">
                   Sign in
                 </Button>
+              </div>
+
+              {/* Demo credentials helper */}
+              <div className="mt-4 p-4 bg-gray-50 rounded-md">
+                <p className="text-sm text-gray-600 font-medium mb-2">Demo Credentials:</p>
+                <p className="text-sm text-gray-600">
+                  Admin: admin@example.com / admin123<br />
+                  Applicant: user@example.com / user123
+                </p>
               </div>
             </form>
           </div>
