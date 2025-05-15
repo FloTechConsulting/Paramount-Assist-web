@@ -43,17 +43,17 @@ const Hire = () => {
         { 
           name: "20-Tonne Excavator", 
           description: "Ideal for medium earthmoving tasks",
-          image: "https://images.pexels.com/photos/2058911/pexels-photo-2058911.jpeg"
+          image: "https://images.pexels.com/photos/4486765/pexels-photo-4486765.jpeg"
         },
         { 
           name: "30-Tonne Excavator", 
           description: "Suitable for larger earthmoving operations",
-          image: "https://images.pexels.com/photos/2437227/pexels-photo-2437227.jpeg"
+          image: "https://images.pexels.com/photos/4486766/pexels-photo-4486766.jpeg"
         },
         { 
           name: "45-Tonne Excavator", 
           description: "Heavy-duty excavation capabilities",
-          image: "https://images.pexels.com/photos/2219122/pexels-photo-2219122.jpeg"
+          image: "https://images.pexels.com/photos/4486767/pexels-photo-4486767.jpeg"
         },
       ]
     },
@@ -64,17 +64,17 @@ const Hire = () => {
         { 
           name: "Compact Wheel Loader", 
           description: "Versatile loader for tight spaces",
-          image: "https://images.pexels.com/photos/2480570/pexels-photo-2480570.jpeg"
+          image: "https://images.pexels.com/photos/4486768/pexels-photo-4486768.jpeg"
         },
         { 
           name: "Medium Wheel Loader", 
           description: "Balanced power and efficiency",
-          image: "https://images.pexels.com/photos/2210475/pexels-photo-2210475.jpeg"
+          image: "https://images.pexels.com/photos/4486769/pexels-photo-4486769.jpeg"
         },
         { 
           name: "Large Wheel Loader", 
           description: "High-capacity material handling",
-          image: "https://images.pexels.com/photos/2138126/pexels-photo-2138126.jpeg"
+          image: "https://images.pexels.com/photos/4486770/pexels-photo-4486770.jpeg"
         },
       ]
     },
@@ -85,17 +85,17 @@ const Hire = () => {
         { 
           name: "D6 Dozer", 
           description: "Medium-sized earthmoving dozer",
-          image: "https://images.pexels.com/photos/2233416/pexels-photo-2233416.jpeg"
+          image: "https://images.pexels.com/photos/4486771/pexels-photo-4486771.jpeg"
         },
         { 
           name: "D8 Dozer", 
           description: "Heavy earthmoving capabilities",
-          image: "https://images.pexels.com/photos/2058740/pexels-photo-2058740.jpeg"
+          image: "https://images.pexels.com/photos/4486772/pexels-photo-4486772.jpeg"
         },
         { 
           name: "D10 Dozer", 
           description: "Extreme earthmoving power",
-          image: "https://images.pexels.com/photos/1009928/pexels-photo-1009928.jpeg"
+          image: "https://images.pexels.com/photos/4486773/pexels-photo-4486773.jpeg"
         },
       ]
     },
@@ -106,17 +106,17 @@ const Hire = () => {
         { 
           name: "30-Tonne Dump Truck", 
           description: "Articulated hauling vehicle",
-          image: "https://images.pexels.com/photos/2406790/pexels-photo-2406790.jpeg"
+          image: "https://images.pexels.com/photos/4486774/pexels-photo-4486774.jpeg"
         },
         { 
           name: "45-Tonne Dump Truck", 
           description: "Medium-capacity hauling",
-          image: "https://images.pexels.com/photos/2523934/pexels-photo-2523934.jpeg"
+          image: "https://images.pexels.com/photos/4486775/pexels-photo-4486775.jpeg"
         },
         { 
           name: "60-Tonne Dump Truck", 
           description: "High-capacity material transport",
-          image: "https://images.pexels.com/photos/1267325/pexels-photo-1267325.jpeg"
+          image: "https://images.pexels.com/photos/4486776/pexels-photo-4486776.jpeg"
         },
       ]
     },
