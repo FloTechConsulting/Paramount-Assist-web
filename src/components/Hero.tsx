@@ -15,14 +15,7 @@ const Hero = () => {
             <p className="text-xl mb-8 text-gray-200">
               Paramount Assist streamlines the process of securing financing and equipment hire for your mining operations. Save time, reduce costs, and get back to what matters most.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button asChild className="btn-secondary">
-                <Link to="/finance">Apply for Finance</Link>
-              </Button>
-              <Button asChild className="bg-white text-primary hover:bg-gray-100 px-6 py-3 rounded-md transition-all duration-300 font-semibold">
-                <Link to="/hire">Equipment Hire</Link>
-              </Button>
-            </div>
+            
           </div>
           <div className="hidden md:block animate-slide-in">
             <img src="/placeholder.svg" alt="Mining equipment" className="w-full h-auto rounded-lg shadow-xl" />
