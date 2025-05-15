@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Navigation from '@/components/Navigation';
@@ -41,36 +40,84 @@ const Hire = () => {
       id: "excavators",
       name: "Excavators",
       items: [
-        { name: "20-Tonne Excavator", description: "Ideal for medium earthmoving tasks" },
-        { name: "30-Tonne Excavator", description: "Suitable for larger earthmoving operations" },
-        { name: "45-Tonne Excavator", description: "Heavy-duty excavation capabilities" },
+        { 
+          name: "20-Tonne Excavator", 
+          description: "Ideal for medium earthmoving tasks",
+          image: "https://images.pexels.com/photos/2058911/pexels-photo-2058911.jpeg"
+        },
+        { 
+          name: "30-Tonne Excavator", 
+          description: "Suitable for larger earthmoving operations",
+          image: "https://images.pexels.com/photos/2437227/pexels-photo-2437227.jpeg"
+        },
+        { 
+          name: "45-Tonne Excavator", 
+          description: "Heavy-duty excavation capabilities",
+          image: "https://images.pexels.com/photos/2219122/pexels-photo-2219122.jpeg"
+        },
       ]
     },
     {
       id: "loaders",
       name: "Wheel Loaders",
       items: [
-        { name: "Compact Wheel Loader", description: "Versatile loader for tight spaces" },
-        { name: "Medium Wheel Loader", description: "Balanced power and efficiency" },
-        { name: "Large Wheel Loader", description: "High-capacity material handling" },
+        { 
+          name: "Compact Wheel Loader", 
+          description: "Versatile loader for tight spaces",
+          image: "https://images.pexels.com/photos/2480570/pexels-photo-2480570.jpeg"
+        },
+        { 
+          name: "Medium Wheel Loader", 
+          description: "Balanced power and efficiency",
+          image: "https://images.pexels.com/photos/2210475/pexels-photo-2210475.jpeg"
+        },
+        { 
+          name: "Large Wheel Loader", 
+          description: "High-capacity material handling",
+          image: "https://images.pexels.com/photos/2138126/pexels-photo-2138126.jpeg"
+        },
       ]
     },
     {
       id: "dozers",
       name: "Dozers",
       items: [
-        { name: "D6 Dozer", description: "Medium-sized earthmoving dozer" },
-        { name: "D8 Dozer", description: "Heavy earthmoving capabilities" },
-        { name: "D10 Dozer", description: "Extreme earthmoving power" },
+        { 
+          name: "D6 Dozer", 
+          description: "Medium-sized earthmoving dozer",
+          image: "https://images.pexels.com/photos/2233416/pexels-photo-2233416.jpeg"
+        },
+        { 
+          name: "D8 Dozer", 
+          description: "Heavy earthmoving capabilities",
+          image: "https://images.pexels.com/photos/2058740/pexels-photo-2058740.jpeg"
+        },
+        { 
+          name: "D10 Dozer", 
+          description: "Extreme earthmoving power",
+          image: "https://images.pexels.com/photos/1009928/pexels-photo-1009928.jpeg"
+        },
       ]
     },
     {
       id: "trucks",
       name: "Haul Trucks",
       items: [
-        { name: "30-Tonne Dump Truck", description: "Articulated hauling vehicle" },
-        { name: "45-Tonne Dump Truck", description: "Medium-capacity hauling" },
-        { name: "60-Tonne Dump Truck", description: "High-capacity material transport" },
+        { 
+          name: "30-Tonne Dump Truck", 
+          description: "Articulated hauling vehicle",
+          image: "https://images.pexels.com/photos/2406790/pexels-photo-2406790.jpeg"
+        },
+        { 
+          name: "45-Tonne Dump Truck", 
+          description: "Medium-capacity hauling",
+          image: "https://images.pexels.com/photos/2523934/pexels-photo-2523934.jpeg"
+        },
+        { 
+          name: "60-Tonne Dump Truck", 
+          description: "High-capacity material transport",
+          image: "https://images.pexels.com/photos/1267325/pexels-photo-1267325.jpeg"
+        },
       ]
     },
   ];
@@ -115,9 +162,11 @@ const Hire = () => {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
                   {category.items.map((item, index) => (
                     <div key={index} className="bg-gray-50 p-6 rounded-lg shadow-sm card-hover">
-                      <div className="bg-gray-200 h-48 rounded mb-4 flex items-center justify-center">
-                        <span className="text-gray-500">Equipment Image</span>
-                      </div>
+                      <img 
+                        src={item.image} 
+                        alt={item.name}
+                        className="w-full h-48 object-cover rounded mb-4"
+                      />
                       <h3 className="text-xl font-bold text-primary">{item.name}</h3>
                       <p className="text-gray-600 mt-2">{item.description}</p>
                     </div>
@@ -212,7 +261,7 @@ const Hire = () => {
                   <Label htmlFor="projectLocation">Project Location*</Label>
                   <Input 
                     id="projectLocation"
-                    placeholder="City, State"
+                    placeholder="City, Province"
                     {...register("projectLocation", { required: true })}
                     className={errors.projectLocation ? "border-red-500" : ""}
                   />
