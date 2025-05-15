@@ -15,6 +15,7 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import { FileText } from "lucide-react";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -38,7 +39,29 @@ const Dashboard = () => {
       status: "Pending",
       submitted: "2024-03-15",
       company: "Mining Corp",
-      documents: ["Financial Statements", "Company Profile"],
+      documents: [
+        { 
+          name: "Financial Statements", 
+          type: "pdf",
+          size: "2.4 MB",
+          uploaded: "2024-03-15",
+          status: "verified"
+        },
+        { 
+          name: "Company Profile", 
+          type: "pdf",
+          size: "1.1 MB",
+          uploaded: "2024-03-15",
+          status: "pending"
+        },
+        { 
+          name: "Tax Clearance", 
+          type: "pdf",
+          size: "500 KB",
+          uploaded: "2024-03-14",
+          status: "verified"
+        }
+      ],
     },
     {
       id: 2,
@@ -48,7 +71,22 @@ const Dashboard = () => {
       status: "Documents Required",
       submitted: "2024-03-14",
       company: "Gold Miners Ltd",
-      documents: ["Company Registration"],
+      documents: [
+        { 
+          name: "Company Registration", 
+          type: "pdf",
+          size: "1.2 MB",
+          uploaded: "2024-03-14",
+          status: "pending"
+        },
+        { 
+          name: "Insurance Certificate", 
+          type: "pdf",
+          size: "800 KB",
+          uploaded: "2024-03-14",
+          status: "rejected"
+        }
+      ],
     },
     {
       id: 3,
@@ -58,7 +96,29 @@ const Dashboard = () => {
       status: "Under Review",
       submitted: "2024-03-13",
       company: "Diamond Diggers",
-      documents: ["Business Plan", "Financial Projections"],
+      documents: [
+        { 
+          name: "Business Plan", 
+          type: "pdf",
+          size: "3.1 MB",
+          uploaded: "2024-03-13",
+          status: "verified"
+        },
+        { 
+          name: "Financial Projections", 
+          type: "xlsx",
+          size: "1.5 MB",
+          uploaded: "2024-03-13",
+          status: "pending"
+        },
+        { 
+          name: "Bank Statements", 
+          type: "pdf",
+          size: "4.2 MB",
+          uploaded: "2024-03-13",
+          status: "verified"
+        }
+      ],
     },
   ];
 
@@ -93,6 +153,28 @@ const Dashboard = () => {
         {status}
       </Badge>
     );
+  };
+
+  const getDocumentStatusBadge = (status) => {
+    const styles = {
+      "verified": "bg-green-100 text-green-800",
+      "pending": "bg-yellow-100 text-yellow-800",
+      "rejected": "bg-red-100 text-red-800",
+    };
+
+    return (
+      <Badge className={styles[status] || "bg-gray-100 text-gray-800"}>
+        {status.charAt(0).toUpperCase() + status.slice(1)}
+      </Badge>
+    );
+  };
+
+  const handleViewDocument = (document) => {
+    // In a real application, this would open the document
+    toast({
+      title: "Opening Document",
+      description: `Opening ${document.name}`,
+    });
   };
 
   return (
@@ -136,11 +218,11 @@ const Dashboard = () => {
                                   View Details
                                 </Button>
                               </DialogTrigger>
-                              <DialogContent className="max-w-2xl">
+                              <DialogContent className="max-w-4xl">
                                 <DialogHeader>
                                   <DialogTitle>Application Details</DialogTitle>
                                 </DialogHeader>
-                                <div className="space-y-4 mt-4">
+                                <div className="space-y-6 mt-4">
                                   <div className="grid grid-cols-2 gap-4">
                                     <div>
                                       <h3 className="font-semibold">Applicant</h3>
@@ -161,12 +243,44 @@ const Dashboard = () => {
                                   </div>
                                   
                                   <div>
-                                    <h3 className="font-semibold mb-2">Documents</h3>
-                                    <ul className="list-disc list-inside">
-                                      {app.documents.map((doc, index) => (
-                                        <li key={index}>{doc}</li>
-                                      ))}
-                                    </ul>
+                                    <h3 className="font-semibold mb-4">Documents</h3>
+                                    <div className="bg-gray-50 rounded-lg p-4">
+                                      <Table>
+                                        <TableHeader>
+                                          <TableRow>
+                                            <TableHead>Document</TableHead>
+                                            <TableHead>Type</TableHead>
+                                            <TableHead>Size</TableHead>
+                                            <TableHead>Uploaded</TableHead>
+                                            <TableHead>Status</TableHead>
+                                            <TableHead>Actions</TableHead>
+                                          </TableRow>
+                                        </TableHeader>
+                                        <TableBody>
+                                          {app.documents.map((doc, index) => (
+                                            <TableRow key={index}>
+                                              <TableCell className="flex items-center gap-2">
+                                                <FileText className="w-4 h-4" />
+                                                {doc.name}
+                                              </TableCell>
+                                              <TableCell className="uppercase">{doc.type}</TableCell>
+                                              <TableCell>{doc.size}</TableCell>
+                                              <TableCell>{doc.uploaded}</TableCell>
+                                              <TableCell>{getDocumentStatusBadge(doc.status)}</TableCell>
+                                              <TableCell>
+                                                <Button 
+                                                  variant="outline" 
+                                                  size="sm"
+                                                  onClick={() => handleViewDocument(doc)}
+                                                >
+                                                  View
+                                                </Button>
+                                              </TableCell>
+                                            </TableRow>
+                                          ))}
+                                        </TableBody>
+                                      </Table>
+                                    </div>
                                   </div>
 
                                   <div className="space-y-2">
