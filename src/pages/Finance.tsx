@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import Navigation from '@/components/Navigation';
@@ -61,14 +60,14 @@ const Finance = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="abn">ABN/ACN*</Label>
+                  <Label htmlFor="registrationNumber">Company Registration Number*</Label>
                   <Input 
-                    id="abn"
-                    placeholder="Australian Business Number"
-                    {...register("abn", { required: true })}
-                    className={errors.abn ? "border-red-500" : ""}
+                    id="registrationNumber"
+                    placeholder="Registration Number"
+                    {...register("registrationNumber", { required: true })}
+                    className={errors.registrationNumber ? "border-red-500" : ""}
                   />
-                  {errors.abn && <p className="text-red-500 text-sm">ABN/ACN is required</p>}
+                  {errors.registrationNumber && <p className="text-red-500 text-sm">Registration number is required</p>}
                 </div>
 
                 <div className="space-y-2">
@@ -91,8 +90,11 @@ const Finance = () => {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="coal">Coal Mining</SelectItem>
-                      <SelectItem value="metals">Metal Ore Mining</SelectItem>
-                      <SelectItem value="minerals">Non-metallic Mineral Mining</SelectItem>
+                      <SelectItem value="gold">Gold Mining</SelectItem>
+                      <SelectItem value="platinum">Platinum Mining</SelectItem>
+                      <SelectItem value="diamonds">Diamond Mining</SelectItem>
+                      <SelectItem value="chrome">Chrome Mining</SelectItem>
+                      <SelectItem value="iron">Iron Ore Mining</SelectItem>
                       <SelectItem value="services">Mining Support Services</SelectItem>
                       <SelectItem value="exploration">Exploration</SelectItem>
                       <SelectItem value="other">Other</SelectItem>
@@ -168,7 +170,7 @@ const Finance = () => {
                   <Label htmlFor="equipmentValue">Estimated Value*</Label>
                   <Input 
                     id="equipmentValue"
-                    placeholder="AUD"
+                    placeholder="ZAR"
                     {...register("equipmentValue", { required: true })}
                     className={errors.equipmentValue ? "border-red-500" : ""}
                   />
@@ -179,7 +181,7 @@ const Finance = () => {
                   <Label htmlFor="financeAmount">Finance Amount Required*</Label>
                   <Input 
                     id="financeAmount"
-                    placeholder="AUD"
+                    placeholder="ZAR"
                     {...register("financeAmount", { required: true })}
                     className={errors.financeAmount ? "border-red-500" : ""}
                   />
