@@ -18,7 +18,6 @@ const Navigation = () => {
   };
 
   const navLinks = [
-    { name: 'Home', href: '/' },
     { name: 'How It Works', href: '/how-it-works' },
     { name: 'Finance', href: '/finance' },
     { name: 'Equipment Hire', href: '/hire' },
