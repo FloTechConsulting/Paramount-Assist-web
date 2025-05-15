@@ -52,27 +52,9 @@ const Dashboard = () => {
         { date: "2024-03-15 14:15", action: "Initial Review Started", user: "Admin" }
       ],
       documents: [
-        { 
-          name: "Financial Statements", 
-          type: "pdf",
-          size: "2.4 MB",
-          uploaded: "2024-03-15",
-          status: "verified"
-        },
-        { 
-          name: "Company Profile", 
-          type: "pdf",
-          size: "1.1 MB",
-          uploaded: "2024-03-15",
-          status: "pending"
-        },
-        { 
-          name: "Tax Clearance", 
-          type: "pdf",
-          size: "500 KB",
-          uploaded: "2024-03-14",
-          status: "verified"
-        }
+        { name: "Financial Statements", type: "pdf", size: "2.4 MB", uploaded: "2024-03-15", status: "verified" },
+        { name: "Company Profile", type: "pdf", size: "1.1 MB", uploaded: "2024-03-15", status: "pending" },
+        { name: "Tax Clearance", type: "pdf", size: "500 KB", uploaded: "2024-03-14", status: "verified" }
       ],
     },
     {
@@ -89,20 +71,8 @@ const Dashboard = () => {
         { date: "2024-03-14 15:30", action: "Additional Information Requested", user: "Admin" }
       ],
       documents: [
-        { 
-          name: "Company Registration", 
-          type: "pdf",
-          size: "1.2 MB",
-          uploaded: "2024-03-14",
-          status: "pending"
-        },
-        { 
-          name: "Insurance Certificate", 
-          type: "pdf",
-          size: "800 KB",
-          uploaded: "2024-03-14",
-          status: "rejected"
-        }
+        { name: "Company Registration", type: "pdf", size: "1.2 MB", uploaded: "2024-03-14", status: "pending" },
+        { name: "Insurance Certificate", type: "pdf", size: "800 KB", uploaded: "2024-03-14", status: "rejected" }
       ],
     },
     {
@@ -120,29 +90,73 @@ const Dashboard = () => {
         { date: "2024-03-14 10:15", action: "Credit Check Completed", user: "System" }
       ],
       documents: [
-        { 
-          name: "Business Plan", 
-          type: "pdf",
-          size: "3.1 MB",
-          uploaded: "2024-03-13",
-          status: "verified"
-        },
-        { 
-          name: "Financial Projections", 
-          type: "xlsx",
-          size: "1.5 MB",
-          uploaded: "2024-03-13",
-          status: "pending"
-        },
-        { 
-          name: "Bank Statements", 
-          type: "pdf",
-          size: "4.2 MB",
-          uploaded: "2024-03-13",
-          status: "verified"
-        }
+        { name: "Business Plan", type: "pdf", size: "3.1 MB", uploaded: "2024-03-13", status: "verified" },
+        { name: "Financial Projections", type: "xlsx", size: "1.5 MB", uploaded: "2024-03-13", status: "pending" },
+        { name: "Bank Statements", type: "pdf", size: "4.2 MB", uploaded: "2024-03-13", status: "verified" }
       ],
     },
+    {
+      id: 4,
+      applicant: "David Wilson",
+      type: "Equipment Finance",
+      amount: "R450,000",
+      status: "Approved",
+      submitted: "2024-03-12",
+      company: "Platinum Mining Solutions",
+      history: [
+        { date: "2024-03-12 10:00", action: "Application Submitted", user: "David Wilson" },
+        { date: "2024-03-12 11:30", action: "Documents Uploaded", user: "David Wilson" },
+        { date: "2024-03-13 09:00", action: "Review Started", user: "Admin" },
+        { date: "2024-03-14 14:30", action: "Credit Check Completed", user: "System" },
+        { date: "2024-03-15 10:00", action: "Application Approved", user: "Admin" }
+      ],
+      documents: [
+        { name: "Financial Statements", type: "pdf", size: "5.2 MB", uploaded: "2024-03-12", status: "verified" },
+        { name: "Business Plan", type: "pdf", size: "2.8 MB", uploaded: "2024-03-12", status: "verified" },
+        { name: "Tax Clearance", type: "pdf", size: "1.1 MB", uploaded: "2024-03-12", status: "verified" }
+      ],
+    },
+    {
+      id: 5,
+      applicant: "Emma Thompson",
+      type: "Equipment Hire",
+      amount: "R75,000",
+      status: "Rejected",
+      submitted: "2024-03-11",
+      company: "Thompson Mining",
+      history: [
+        { date: "2024-03-11 13:20", action: "Application Submitted", user: "Emma Thompson" },
+        { date: "2024-03-11 15:45", action: "Documents Uploaded", user: "Emma Thompson" },
+        { date: "2024-03-12 09:30", action: "Review Started", user: "Admin" },
+        { date: "2024-03-13 11:00", action: "Credit Check Failed", user: "System" },
+        { date: "2024-03-13 14:15", action: "Application Rejected", user: "Admin" }
+      ],
+      documents: [
+        { name: "Company Documents", type: "pdf", size: "1.8 MB", uploaded: "2024-03-11", status: "rejected" },
+        { name: "Financial Records", type: "pdf", size: "2.3 MB", uploaded: "2024-03-11", status: "rejected" }
+      ],
+    },
+    {
+      id: 6,
+      applicant: "James Anderson",
+      type: "Equipment Finance",
+      amount: "R320,000",
+      status: "Approved",
+      submitted: "2024-03-10",
+      company: "Anderson Mining Co",
+      history: [
+        { date: "2024-03-10 09:15", action: "Application Submitted", user: "James Anderson" },
+        { date: "2024-03-10 10:45", action: "Documents Uploaded", user: "James Anderson" },
+        { date: "2024-03-11 08:30", action: "Review Started", user: "Admin" },
+        { date: "2024-03-12 13:20", action: "Credit Check Passed", user: "System" },
+        { date: "2024-03-13 09:45", action: "Application Approved", user: "Admin" }
+      ],
+      documents: [
+        { name: "Business Registration", type: "pdf", size: "1.5 MB", uploaded: "2024-03-10", status: "verified" },
+        { name: "Financial Statements", type: "pdf", size: "3.2 MB", uploaded: "2024-03-10", status: "verified" },
+        { name: "Mining Permits", type: "pdf", size: "2.1 MB", uploaded: "2024-03-10", status: "verified" }
+      ],
+    }
   ];
 
   const handleExportToExcel = () => {
@@ -232,6 +246,19 @@ const Dashboard = () => {
     });
   };
 
+  const getStatusCounts = () => {
+    return {
+      total: applications.length,
+      pending: applications.filter(app => app.status === "Pending").length,
+      documentsRequired: applications.filter(app => app.status === "Documents Required").length,
+      approved: applications.filter(app => app.status === "Approved").length,
+      rejected: applications.filter(app => app.status === "Rejected").length,
+      underReview: applications.filter(app => app.status === "Under Review").length,
+    };
+  };
+
+  const stats = getStatusCounts();
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navigation />
@@ -246,7 +273,7 @@ const Dashboard = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">{applications.length}</div>
+                <div className="text-2xl font-bold">{stats.total}</div>
               </CardContent>
             </Card>
             <Card>
@@ -257,7 +284,7 @@ const Dashboard = () => {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">
-                  {applications.filter(app => app.status === "Pending").length}
+                  {stats.pending + stats.underReview}
                 </div>
               </CardContent>
             </Card>
@@ -269,7 +296,7 @@ const Dashboard = () => {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">
-                  {applications.filter(app => app.status === "Documents Required").length}
+                  {stats.documentsRequired}
                 </div>
               </CardContent>
             </Card>
@@ -281,7 +308,7 @@ const Dashboard = () => {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">
-                  {applications.filter(app => app.status === "Approved").length}
+                  {stats.approved}
                 </div>
               </CardContent>
             </Card>
