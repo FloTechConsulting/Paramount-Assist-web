@@ -7,19 +7,25 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import Navigation from '@/components/Navigation';
 import Footer from '@/components/Footer';
+import { 
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const Login = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { register, handleSubmit, formState: { errors }, watch } = useForm();
   const { toast } = useToast();
   const navigate = useNavigate();
+  const [userType, setUserType] = React.useState('applicant');
 
   const onSubmit = (data) => {
-    // This would typically validate against your backend
-    if (data.email === 'admin@example.com' && data.password === 'admin123') {
+    if (userType === 'admin' && data.email === 'admin@example.com' && data.password === 'admin123') {
       localStorage.setItem('userRole', 'admin');
       navigate('/admin/dashboard');
     } else {
-      // For demo purposes, let's assume any other login is an applicant
       localStorage.setItem('userRole', 'applicant');
       navigate('/applicant/dashboard');
     }
@@ -47,6 +53,19 @@ const Login = () => {
           
           <div className="mt-8 bg-white py-8 px-4 shadow-lg rounded-lg sm:px-10">
             <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+              <div className="space-y-2">
+                <Label>Account Type</Label>
+                <Select value={userType} onValueChange={setUserType}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select Account Type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="applicant">Applicant</SelectItem>
+                    <SelectItem value="admin">Administrator</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
               <div>
                 <Label htmlFor="email">Email address</Label>
                 <Input
