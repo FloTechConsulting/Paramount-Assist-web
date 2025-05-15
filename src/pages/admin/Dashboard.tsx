@@ -159,6 +159,15 @@ const Dashboard = () => {
     }
   ];
 
+  // Separate active and completed applications
+  const activeApplications = applications.filter(app => 
+    ['Pending', 'Documents Required', 'Under Review'].includes(app.status)
+  );
+
+  const completedApplications = applications.filter(app => 
+    ['Approved', 'Rejected'].includes(app.status)
+  );
+
   const handleExportToExcel = () => {
     const headers = ['ID', 'Applicant', 'Company', 'Type', 'Amount', 'Status', 'Submitted'];
     const csvData = applications.map(app => [
@@ -259,6 +268,167 @@ const Dashboard = () => {
 
   const stats = getStatusCounts();
 
+  const ApplicationTable = ({ applications, showActions = true }) => (
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead>Applicant</TableHead>
+          <TableHead>Company</TableHead>
+          <TableHead>Type</TableHead>
+          <TableHead>Amount</TableHead>
+          <TableHead>Status</TableHead>
+          <TableHead>Submitted</TableHead>
+          <TableHead>Details</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {applications.map((app) => (
+          <TableRow key={app.id}>
+            <TableCell>{app.applicant}</TableCell>
+            <TableCell>{app.company}</TableCell>
+            <TableCell>{app.type}</TableCell>
+            <TableCell>{app.amount}</TableCell>
+            <TableCell>{getStatusBadge(app.status)}</TableCell>
+            <TableCell>{app.submitted}</TableCell>
+            <TableCell>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button variant="outline" size="sm">
+                    View Details
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-4xl">
+                  <DialogHeader>
+                    <DialogTitle>Application Details</DialogTitle>
+                  </DialogHeader>
+                  <div className="mt-4">
+                    <Tabs defaultValue="details">
+                      <TabsList className="grid w-full grid-cols-3">
+                        <TabsTrigger value="details">Details</TabsTrigger>
+                        <TabsTrigger value="documents">Documents</TabsTrigger>
+                        <TabsTrigger value="history">History</TabsTrigger>
+                      </TabsList>
+
+                      <TabsContent value="details" className="space-y-6">
+                        <div className="grid grid-cols-2 gap-4">
+                          <div>
+                            <h3 className="font-semibold">Applicant</h3>
+                            <p>{app.applicant}</p>
+                          </div>
+                          <div>
+                            <h3 className="font-semibold">Company</h3>
+                            <p>{app.company}</p>
+                          </div>
+                          <div>
+                            <h3 className="font-semibold">Type</h3>
+                            <p>{app.type}</p>
+                          </div>
+                          <div>
+                            <h3 className="font-semibold">Amount</h3>
+                            <p>{app.amount}</p>
+                          </div>
+                        </div>
+
+                        {showActions && (
+                          <>
+                            <div className="space-y-2">
+                              <h3 className="font-semibold">Feedback</h3>
+                              <Textarea
+                                placeholder="Enter feedback or request additional information..."
+                                value={feedback}
+                                onChange={(e) => setFeedback(e.target.value)}
+                              />
+                            </div>
+
+                            <div className="flex gap-2 justify-end">
+                              <Button
+                                variant="outline"
+                                onClick={() => handleStatusChange(app.id, 'Documents Required', feedback)}
+                              >
+                                Request Documents
+                              </Button>
+                              <Button
+                                variant="destructive"
+                                onClick={() => handleStatusChange(app.id, 'Rejected', feedback)}
+                              >
+                                Reject
+                              </Button>
+                              <Button
+                                onClick={() => handleStatusChange(app.id, 'Approved', feedback)}
+                              >
+                                Approve
+                              </Button>
+                            </div>
+                          </>
+                        )}
+                      </TabsContent>
+
+                      <TabsContent value="documents">
+                        <div className="bg-gray-50 rounded-lg p-4">
+                          <Table>
+                            <TableHeader>
+                              <TableRow>
+                                <TableHead>Document</TableHead>
+                                <TableHead>Type</TableHead>
+                                <TableHead>Size</TableHead>
+                                <TableHead>Uploaded</TableHead>
+                                <TableHead>Status</TableHead>
+                                <TableHead>Actions</TableHead>
+                              </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                              {app.documents.map((doc, index) => (
+                                <TableRow key={index}>
+                                  <TableCell className="flex items-center gap-2">
+                                    <FileText className="w-4 h-4" />
+                                    {doc.name}
+                                  </TableCell>
+                                  <TableCell className="uppercase">{doc.type}</TableCell>
+                                  <TableCell>{doc.size}</TableCell>
+                                  <TableCell>{doc.uploaded}</TableCell>
+                                  <TableCell>{getDocumentStatusBadge(doc.status)}</TableCell>
+                                  <TableCell>
+                                    <Button 
+                                      variant="outline" 
+                                      size="sm"
+                                      onClick={() => handleViewDocument(doc)}
+                                    >
+                                      View
+                                    </Button>
+                                  </TableCell>
+                                </TableRow>
+                              ))}
+                            </TableBody>
+                          </Table>
+                        </div>
+                      </TabsContent>
+
+                      <TabsContent value="history">
+                        <div className="space-y-4">
+                          {app.history.map((event, index) => (
+                            <div key={index} className="flex items-start gap-4 p-4 bg-gray-50 rounded-lg">
+                              <History className="w-5 h-5 mt-1 text-gray-500" />
+                              <div>
+                                <p className="font-medium">{event.action}</p>
+                                <p className="text-sm text-gray-500">
+                                  By {event.user} on {event.date}
+                                </p>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </TabsContent>
+                    </Tabs>
+                  </div>
+                </DialogContent>
+              </Dialog>
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  );
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navigation />
@@ -323,320 +493,20 @@ const Dashboard = () => {
               </Button>
             </div>
 
-            <div className="md:hidden space-y-4">
-              {applications.map((app) => (
-                <Card key={app.id} className="cursor-pointer hover:shadow-md transition-shadow">
-                  <CardContent className="pt-6">
-                    <div className="flex justify-between items-start mb-4">
-                      <div>
-                        <h3 className="font-semibold">{app.applicant}</h3>
-                        <p className="text-sm text-muted-foreground">{app.company}</p>
-                      </div>
-                      {getStatusBadge(app.status)}
-                    </div>
-                    <div className="space-y-2 text-sm">
-                      <div className="flex justify-between">
-                        <span className="text-muted-foreground">Type:</span>
-                        <span>{app.type}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-muted-foreground">Amount:</span>
-                        <span>{app.amount}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-muted-foreground">Submitted:</span>
-                        <span>{app.submitted}</span>
-                      </div>
-                    </div>
-                    <Dialog>
-                      <DialogTrigger asChild>
-                        <Button variant="outline" className="w-full mt-4">
-                          View Details
-                          <ChevronRight className="w-4 h-4 ml-2" />
-                        </Button>
-                      </DialogTrigger>
-                      <DialogContent className="max-w-4xl">
-                        <DialogHeader>
-                          <DialogTitle>Application Details</DialogTitle>
-                        </DialogHeader>
-                        <div className="mt-4">
-                          <Tabs defaultValue="details">
-                            <TabsList className="grid w-full grid-cols-3">
-                              <TabsTrigger value="details">Details</TabsTrigger>
-                              <TabsTrigger value="documents">Documents</TabsTrigger>
-                              <TabsTrigger value="history">History</TabsTrigger>
-                            </TabsList>
+            <Tabs defaultValue="active" className="w-full">
+              <TabsList className="mb-4">
+                <TabsTrigger value="active">Active Applications</TabsTrigger>
+                <TabsTrigger value="completed">Completed Applications</TabsTrigger>
+              </TabsList>
 
-                            <TabsContent value="details" className="space-y-6">
-                              <div className="grid grid-cols-2 gap-4">
-                                <div>
-                                  <h3 className="font-semibold">Applicant</h3>
-                                  <p>{app.applicant}</p>
-                                </div>
-                                <div>
-                                  <h3 className="font-semibold">Company</h3>
-                                  <p>{app.company}</p>
-                                </div>
-                                <div>
-                                  <h3 className="font-semibold">Type</h3>
-                                  <p>{app.type}</p>
-                                </div>
-                                <div>
-                                  <h3 className="font-semibold">Amount</h3>
-                                  <p>{app.amount}</p>
-                                </div>
-                              </div>
+              <TabsContent value="active">
+                <ApplicationTable applications={activeApplications} showActions={true} />
+              </TabsContent>
 
-                              <div className="space-y-2">
-                                <h3 className="font-semibold">Feedback</h3>
-                                <Textarea
-                                  placeholder="Enter feedback or request additional information..."
-                                  value={feedback}
-                                  onChange={(e) => setFeedback(e.target.value)}
-                                />
-                              </div>
-
-                              <div className="flex gap-2 justify-end">
-                                <Button
-                                  variant="outline"
-                                  onClick={() => handleStatusChange(app.id, 'Documents Required', feedback)}
-                                >
-                                  Request Documents
-                                </Button>
-                                <Button
-                                  variant="destructive"
-                                  onClick={() => handleStatusChange(app.id, 'Rejected', feedback)}
-                                >
-                                  Reject
-                                </Button>
-                                <Button
-                                  onClick={() => handleStatusChange(app.id, 'Approved', feedback)}
-                                >
-                                  Approve
-                                </Button>
-                              </div>
-                            </TabsContent>
-
-                            <TabsContent value="documents">
-                              <div className="bg-gray-50 rounded-lg p-4">
-                                <Table>
-                                  <TableHeader>
-                                    <TableRow>
-                                      <TableHead>Document</TableHead>
-                                      <TableHead>Type</TableHead>
-                                      <TableHead>Size</TableHead>
-                                      <TableHead>Uploaded</TableHead>
-                                      <TableHead>Status</TableHead>
-                                      <TableHead>Actions</TableHead>
-                                    </TableRow>
-                                  </TableHeader>
-                                  <TableBody>
-                                    {app.documents.map((doc, index) => (
-                                      <TableRow key={index}>
-                                        <TableCell className="flex items-center gap-2">
-                                          <FileText className="w-4 h-4" />
-                                          {doc.name}
-                                        </TableCell>
-                                        <TableCell className="uppercase">{doc.type}</TableCell>
-                                        <TableCell>{doc.size}</TableCell>
-                                        <TableCell>{doc.uploaded}</TableCell>
-                                        <TableCell>{getDocumentStatusBadge(doc.status)}</TableCell>
-                                        <TableCell>
-                                          <Button 
-                                            variant="outline" 
-                                            size="sm"
-                                            onClick={() => handleViewDocument(doc)}
-                                          >
-                                            View
-                                          </Button>
-                                        </TableCell>
-                                      </TableRow>
-                                    ))}
-                                  </TableBody>
-                                </Table>
-                              </div>
-                            </TabsContent>
-
-                            <TabsContent value="history">
-                              <div className="space-y-4">
-                                {app.history.map((event, index) => (
-                                  <div key={index} className="flex items-start gap-4 p-4 bg-gray-50 rounded-lg">
-                                    <History className="w-5 h-5 mt-1 text-gray-500" />
-                                    <div>
-                                      <p className="font-medium">{event.action}</p>
-                                      <p className="text-sm text-gray-500">
-                                        By {event.user} on {event.date}
-                                      </p>
-                                    </div>
-                                  </div>
-                                ))}
-                              </div>
-                            </TabsContent>
-                          </Tabs>
-                        </div>
-                      </DialogContent>
-                    </Dialog>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-
-            <div className="hidden md:block overflow-auto">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Applicant</TableHead>
-                    <TableHead>Company</TableHead>
-                    <TableHead>Type</TableHead>
-                    <TableHead>Amount</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Submitted</TableHead>
-                    <TableHead>Actions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {applications.map((app) => (
-                    <TableRow key={app.id}>
-                      <TableCell>{app.applicant}</TableCell>
-                      <TableCell>{app.company}</TableCell>
-                      <TableCell>{app.type}</TableCell>
-                      <TableCell>{app.amount}</TableCell>
-                      <TableCell>{getStatusBadge(app.status)}</TableCell>
-                      <TableCell>{app.submitted}</TableCell>
-                      <TableCell>
-                        <Dialog>
-                          <DialogTrigger asChild>
-                            <Button variant="outline" size="sm">
-                              View Details
-                            </Button>
-                          </DialogTrigger>
-                          <DialogContent className="max-w-4xl">
-                            <DialogHeader>
-                              <DialogTitle>Application Details</DialogTitle>
-                            </DialogHeader>
-                            <div className="mt-4">
-                              <Tabs defaultValue="details">
-                                <TabsList className="grid w-full grid-cols-3">
-                                  <TabsTrigger value="details">Details</TabsTrigger>
-                                  <TabsTrigger value="documents">Documents</TabsTrigger>
-                                  <TabsTrigger value="history">History</TabsTrigger>
-                                </TabsList>
-
-                                <TabsContent value="details" className="space-y-6">
-                                  <div className="grid grid-cols-2 gap-4">
-                                    <div>
-                                      <h3 className="font-semibold">Applicant</h3>
-                                      <p>{app.applicant}</p>
-                                    </div>
-                                    <div>
-                                      <h3 className="font-semibold">Company</h3>
-                                      <p>{app.company}</p>
-                                    </div>
-                                    <div>
-                                      <h3 className="font-semibold">Type</h3>
-                                      <p>{app.type}</p>
-                                    </div>
-                                    <div>
-                                      <h3 className="font-semibold">Amount</h3>
-                                      <p>{app.amount}</p>
-                                    </div>
-                                  </div>
-
-                                  <div className="space-y-2">
-                                    <h3 className="font-semibold">Feedback</h3>
-                                    <Textarea
-                                      placeholder="Enter feedback or request additional information..."
-                                      value={feedback}
-                                      onChange={(e) => setFeedback(e.target.value)}
-                                    />
-                                  </div>
-
-                                  <div className="flex gap-2 justify-end">
-                                    <Button
-                                      variant="outline"
-                                      onClick={() => handleStatusChange(app.id, 'Documents Required', feedback)}
-                                    >
-                                      Request Documents
-                                    </Button>
-                                    <Button
-                                      variant="destructive"
-                                      onClick={() => handleStatusChange(app.id, 'Rejected', feedback)}
-                                    >
-                                      Reject
-                                    </Button>
-                                    <Button
-                                      onClick={() => handleStatusChange(app.id, 'Approved', feedback)}
-                                    >
-                                      Approve
-                                    </Button>
-                                  </div>
-                                </TabsContent>
-
-                                <TabsContent value="documents">
-                                  <div className="bg-gray-50 rounded-lg p-4">
-                                    <Table>
-                                      <TableHeader>
-                                        <TableRow>
-                                          <TableHead>Document</TableHead>
-                                          <TableHead>Type</TableHead>
-                                          <TableHead>Size</TableHead>
-                                          <TableHead>Uploaded</TableHead>
-                                          <TableHead>Status</TableHead>
-                                          <TableHead>Actions</TableHead>
-                                        </TableRow>
-                                      </TableHeader>
-                                      <TableBody>
-                                        {app.documents.map((doc, index) => (
-                                          <TableRow key={index}>
-                                            <TableCell className="flex items-center gap-2">
-                                              <FileText className="w-4 h-4" />
-                                              {doc.name}
-                                            </TableCell>
-                                            <TableCell className="uppercase">{doc.type}</TableCell>
-                                            <TableCell>{doc.size}</TableCell>
-                                            <TableCell>{doc.uploaded}</TableCell>
-                                            <TableCell>{getDocumentStatusBadge(doc.status)}</TableCell>
-                                            <TableCell>
-                                              <Button 
-                                                variant="outline" 
-                                                size="sm"
-                                                onClick={() => handleViewDocument(doc)}
-                                              >
-                                                View
-                                              </Button>
-                                            </TableCell>
-                                          </TableRow>
-                                        ))}
-                                      </TableBody>
-                                    </Table>
-                                  </div>
-                                </TabsContent>
-
-                                <TabsContent value="history">
-                                  <div className="space-y-4">
-                                    {app.history.map((event, index) => (
-                                      <div key={index} className="flex items-start gap-4 p-4 bg-gray-50 rounded-lg">
-                                        <History className="w-5 h-5 mt-1 text-gray-500" />
-                                        <div>
-                                          <p className="font-medium">{event.action}</p>
-                                          <p className="text-sm text-gray-500">
-                                            By {event.user} on {event.date}
-                                          </p>
-                                        </div>
-                                      </div>
-                                    ))}
-                                  </div>
-                                </TabsContent>
-                              </Tabs>
-                            </div>
-                          </DialogContent>
-                        </Dialog>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
+              <TabsContent value="completed">
+                <ApplicationTable applications={completedApplications} showActions={false} />
+              </TabsContent>
+            </Tabs>
           </div>
         </div>
       </div>
