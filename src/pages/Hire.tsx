@@ -43,17 +43,17 @@ const Hire = () => {
         { 
           name: "20-Tonne Excavator", 
           description: "Ideal for medium earthmoving tasks",
-          image: "https://images.pexels.com/photos/4486765/pexels-photo-4486765.jpeg"
+          image: "https://plantindex.co.za/wp-content/uploads/2022/05/cat-320-700x700.png"
         },
         { 
           name: "30-Tonne Excavator", 
           description: "Suitable for larger earthmoving operations",
-          image: "https://images.pexels.com/photos/4486766/pexels-photo-4486766.jpeg"
+          image: "https://plantindex.co.za/wp-content/uploads/2022/05/30-ton-exca-700x534.jpeg"
         },
         { 
           name: "45-Tonne Excavator", 
           description: "Heavy-duty excavation capabilities",
-          image: "https://images.pexels.com/photos/4486767/pexels-photo-4486767.jpeg"
+          image: "https://www.ridgwayrentals.com/wp-content/uploads/2020/09/Komatsu-PC-490-LC-45-Ton-Excavator-For-Sale-300x225.jpg"
         },
       ]
     },
