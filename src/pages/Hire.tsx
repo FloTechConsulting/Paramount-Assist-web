@@ -69,12 +69,12 @@ const Hire = () => {
         { 
           name: "Medium Wheel Loader", 
           description: "Balanced power and efficiency",
-          image: "https://images.pexels.com/photos/4486769/pexels-photo-4486769.jpeg"
+          image: "https://plantindex.co.za/wp-content/uploads/2022/06/Cat-950M-Hire.jpeg"
         },
         { 
           name: "Large Wheel Loader", 
           description: "High-capacity material handling",
-          image: "https://images.pexels.com/photos/4486770/pexels-photo-4486770.jpeg"
+          image: "https://plantindex.co.za/wp-content/uploads/2022/06/FEL-Hire.jpg"
         },
       ]
     },
@@ -85,17 +85,17 @@ const Hire = () => {
         { 
           name: "D6 Dozer", 
           description: "Medium-sized earthmoving dozer",
-          image: "https://images.pexels.com/photos/4486771/pexels-photo-4486771.jpeg"
+          image: "https://plantindex.co.za/wp-content/uploads/2022/05/D6GC.jpeg"
         },
         { 
           name: "D8 Dozer", 
           description: "Heavy earthmoving capabilities",
-          image: "https://images.pexels.com/photos/4486772/pexels-photo-4486772.jpeg"
+          image: "https://plantindex.co.za/wp-content/uploads/2022/05/D8R.jpeg"
         },
         { 
           name: "D10 Dozer", 
           description: "Extreme earthmoving power",
-          image: "https://images.pexels.com/photos/4486773/pexels-photo-4486773.jpeg"
+          image: "https://plantindex.co.za/wp-content/uploads/2022/10/Bulldozer-D10Te.jpeg"
         },
       ]
     },
@@ -106,17 +106,17 @@ const Hire = () => {
         { 
           name: "30-Tonne Dump Truck", 
           description: "Articulated hauling vehicle",
-          image: "https://images.pexels.com/photos/4486774/pexels-photo-4486774.jpeg"
+          image: "https://plantindex.co.za/wp-content/uploads/2022/05/Bell-B20E-700x644.jpeg"
         },
         { 
           name: "45-Tonne Dump Truck", 
           description: "Medium-capacity hauling",
-          image: "https://images.pexels.com/photos/4486775/pexels-photo-4486775.jpeg"
+          image: "https://plantindex.co.za/wp-content/uploads/2022/05/a45g-Dump.jpeg"
         },
         { 
           name: "60-Tonne Dump Truck", 
           description: "High-capacity material transport",
-          image: "https://images.pexels.com/photos/4486776/pexels-photo-4486776.jpeg"
+          image: "https://plantindex.co.za/wp-content/uploads/2022/06/Volvo-ADT-Hire.jpeg"
         },
       ]
     },
