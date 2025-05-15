@@ -15,7 +15,13 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { FileText } from "lucide-react";
+import { FileText, Download, History } from "lucide-react";
+import { 
+  Tabs, 
+  TabsContent, 
+  TabsList, 
+  TabsTrigger 
+} from "@/components/ui/tabs";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -39,6 +45,11 @@ const Dashboard = () => {
       status: "Pending",
       submitted: "2024-03-15",
       company: "Mining Corp",
+      history: [
+        { date: "2024-03-15 09:00", action: "Application Submitted", user: "John Smith" },
+        { date: "2024-03-15 10:30", action: "Documents Uploaded", user: "John Smith" },
+        { date: "2024-03-15 14:15", action: "Initial Review Started", user: "Admin" }
+      ],
       documents: [
         { 
           name: "Financial Statements", 
@@ -71,6 +82,11 @@ const Dashboard = () => {
       status: "Documents Required",
       submitted: "2024-03-14",
       company: "Gold Miners Ltd",
+      history: [
+        { date: "2024-03-14 11:20", action: "Application Submitted", user: "Sarah Johnson" },
+        { date: "2024-03-14 13:45", action: "Documents Requested", user: "Admin" },
+        { date: "2024-03-14 15:30", action: "Additional Information Requested", user: "Admin" }
+      ],
       documents: [
         { 
           name: "Company Registration", 
@@ -96,6 +112,12 @@ const Dashboard = () => {
       status: "Under Review",
       submitted: "2024-03-13",
       company: "Diamond Diggers",
+      history: [
+        { date: "2024-03-13 08:45", action: "Application Submitted", user: "Michael Brown" },
+        { date: "2024-03-13 09:30", action: "Documents Uploaded", user: "Michael Brown" },
+        { date: "2024-03-13 14:00", action: "Review Started", user: "Admin" },
+        { date: "2024-03-14 10:15", action: "Credit Check Completed", user: "System" }
+      ],
       documents: [
         { 
           name: "Business Plan", 
@@ -121,6 +143,41 @@ const Dashboard = () => {
       ],
     },
   ];
+
+  const handleExportToExcel = () => {
+    // Convert applications data to CSV format
+    const headers = ['ID', 'Applicant', 'Company', 'Type', 'Amount', 'Status', 'Submitted'];
+    const csvData = applications.map(app => [
+      app.id,
+      app.applicant,
+      app.company,
+      app.type,
+      app.amount,
+      app.status,
+      app.submitted
+    ]);
+
+    const csvContent = [
+      headers.join(','),
+      ...csvData.map(row => row.join(','))
+    ].join('\n');
+
+    // Create blob and download
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', 'applications.csv');
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    toast({
+      title: "Export Successful",
+      description: "Applications data has been exported to Excel format",
+    });
+  };
 
   const handleStatusChange = (applicationId, newStatus, message = '') => {
     toast({
@@ -170,7 +227,6 @@ const Dashboard = () => {
   };
 
   const handleViewDocument = (document) => {
-    // In a real application, this would open the document
     toast({
       title: "Opening Document",
       description: `Opening ${document.name}`,
@@ -184,7 +240,13 @@ const Dashboard = () => {
       <div className="flex-1 bg-gray-50">
         <div className="container-custom py-8">
           <div className="bg-white rounded-lg shadow-md p-6">
-            <h1 className="text-2xl font-bold text-primary mb-6">Admin Dashboard</h1>
+            <div className="flex justify-between items-center mb-6">
+              <h1 className="text-2xl font-bold text-primary">Admin Dashboard</h1>
+              <Button onClick={handleExportToExcel}>
+                <Download className="w-4 h-4 mr-2" />
+                Export to Excel
+              </Button>
+            </div>
 
             <div className="space-y-6">
               <div>
@@ -222,95 +284,120 @@ const Dashboard = () => {
                                 <DialogHeader>
                                   <DialogTitle>Application Details</DialogTitle>
                                 </DialogHeader>
-                                <div className="space-y-6 mt-4">
-                                  <div className="grid grid-cols-2 gap-4">
-                                    <div>
-                                      <h3 className="font-semibold">Applicant</h3>
-                                      <p>{app.applicant}</p>
-                                    </div>
-                                    <div>
-                                      <h3 className="font-semibold">Company</h3>
-                                      <p>{app.company}</p>
-                                    </div>
-                                    <div>
-                                      <h3 className="font-semibold">Type</h3>
-                                      <p>{app.type}</p>
-                                    </div>
-                                    <div>
-                                      <h3 className="font-semibold">Amount</h3>
-                                      <p>{app.amount}</p>
-                                    </div>
-                                  </div>
-                                  
-                                  <div>
-                                    <h3 className="font-semibold mb-4">Documents</h3>
-                                    <div className="bg-gray-50 rounded-lg p-4">
-                                      <Table>
-                                        <TableHeader>
-                                          <TableRow>
-                                            <TableHead>Document</TableHead>
-                                            <TableHead>Type</TableHead>
-                                            <TableHead>Size</TableHead>
-                                            <TableHead>Uploaded</TableHead>
-                                            <TableHead>Status</TableHead>
-                                            <TableHead>Actions</TableHead>
-                                          </TableRow>
-                                        </TableHeader>
-                                        <TableBody>
-                                          {app.documents.map((doc, index) => (
-                                            <TableRow key={index}>
-                                              <TableCell className="flex items-center gap-2">
-                                                <FileText className="w-4 h-4" />
-                                                {doc.name}
-                                              </TableCell>
-                                              <TableCell className="uppercase">{doc.type}</TableCell>
-                                              <TableCell>{doc.size}</TableCell>
-                                              <TableCell>{doc.uploaded}</TableCell>
-                                              <TableCell>{getDocumentStatusBadge(doc.status)}</TableCell>
-                                              <TableCell>
-                                                <Button 
-                                                  variant="outline" 
-                                                  size="sm"
-                                                  onClick={() => handleViewDocument(doc)}
-                                                >
-                                                  View
-                                                </Button>
-                                              </TableCell>
+                                <div className="mt-4">
+                                  <Tabs defaultValue="details">
+                                    <TabsList className="grid w-full grid-cols-3">
+                                      <TabsTrigger value="details">Details</TabsTrigger>
+                                      <TabsTrigger value="documents">Documents</TabsTrigger>
+                                      <TabsTrigger value="history">History</TabsTrigger>
+                                    </TabsList>
+
+                                    <TabsContent value="details" className="space-y-6">
+                                      <div className="grid grid-cols-2 gap-4">
+                                        <div>
+                                          <h3 className="font-semibold">Applicant</h3>
+                                          <p>{app.applicant}</p>
+                                        </div>
+                                        <div>
+                                          <h3 className="font-semibold">Company</h3>
+                                          <p>{app.company}</p>
+                                        </div>
+                                        <div>
+                                          <h3 className="font-semibold">Type</h3>
+                                          <p>{app.type}</p>
+                                        </div>
+                                        <div>
+                                          <h3 className="font-semibold">Amount</h3>
+                                          <p>{app.amount}</p>
+                                        </div>
+                                      </div>
+
+                                      <div className="space-y-2">
+                                        <h3 className="font-semibold">Feedback</h3>
+                                        <Textarea
+                                          placeholder="Enter feedback or request additional information..."
+                                          value={feedback}
+                                          onChange={(e) => setFeedback(e.target.value)}
+                                        />
+                                      </div>
+
+                                      <div className="flex gap-2 justify-end">
+                                        <Button
+                                          variant="outline"
+                                          onClick={() => handleStatusChange(app.id, 'Documents Required', feedback)}
+                                        >
+                                          Request Documents
+                                        </Button>
+                                        <Button
+                                          variant="destructive"
+                                          onClick={() => handleStatusChange(app.id, 'Rejected', feedback)}
+                                        >
+                                          Reject
+                                        </Button>
+                                        <Button
+                                          onClick={() => handleStatusChange(app.id, 'Approved', feedback)}
+                                        >
+                                          Approve
+                                        </Button>
+                                      </div>
+                                    </TabsContent>
+
+                                    <TabsContent value="documents">
+                                      <div className="bg-gray-50 rounded-lg p-4">
+                                        <Table>
+                                          <TableHeader>
+                                            <TableRow>
+                                              <TableHead>Document</TableHead>
+                                              <TableHead>Type</TableHead>
+                                              <TableHead>Size</TableHead>
+                                              <TableHead>Uploaded</TableHead>
+                                              <TableHead>Status</TableHead>
+                                              <TableHead>Actions</TableHead>
                                             </TableRow>
-                                          ))}
-                                        </TableBody>
-                                      </Table>
-                                    </div>
-                                  </div>
+                                          </TableHeader>
+                                          <TableBody>
+                                            {app.documents.map((doc, index) => (
+                                              <TableRow key={index}>
+                                                <TableCell className="flex items-center gap-2">
+                                                  <FileText className="w-4 h-4" />
+                                                  {doc.name}
+                                                </TableCell>
+                                                <TableCell className="uppercase">{doc.type}</TableCell>
+                                                <TableCell>{doc.size}</TableCell>
+                                                <TableCell>{doc.uploaded}</TableCell>
+                                                <TableCell>{getDocumentStatusBadge(doc.status)}</TableCell>
+                                                <TableCell>
+                                                  <Button 
+                                                    variant="outline" 
+                                                    size="sm"
+                                                    onClick={() => handleViewDocument(doc)}
+                                                  >
+                                                    View
+                                                  </Button>
+                                                </TableCell>
+                                              </TableRow>
+                                            ))}
+                                          </TableBody>
+                                        </Table>
+                                      </div>
+                                    </TabsContent>
 
-                                  <div className="space-y-2">
-                                    <h3 className="font-semibold">Feedback</h3>
-                                    <Textarea
-                                      placeholder="Enter feedback or request additional information..."
-                                      value={feedback}
-                                      onChange={(e) => setFeedback(e.target.value)}
-                                    />
-                                  </div>
-
-                                  <div className="flex gap-2 justify-end">
-                                    <Button
-                                      variant="outline"
-                                      onClick={() => handleStatusChange(app.id, 'Documents Required', feedback)}
-                                    >
-                                      Request Documents
-                                    </Button>
-                                    <Button
-                                      variant="destructive"
-                                      onClick={() => handleStatusChange(app.id, 'Rejected', feedback)}
-                                    >
-                                      Reject
-                                    </Button>
-                                    <Button
-                                      onClick={() => handleStatusChange(app.id, 'Approved', feedback)}
-                                    >
-                                      Approve
-                                    </Button>
-                                  </div>
+                                    <TabsContent value="history">
+                                      <div className="space-y-4">
+                                        {app.history.map((event, index) => (
+                                          <div key={index} className="flex items-start gap-4 p-4 bg-gray-50 rounded-lg">
+                                            <History className="w-5 h-5 mt-1 text-gray-500" />
+                                            <div>
+                                              <p className="font-medium">{event.action}</p>
+                                              <p className="text-sm text-gray-500">
+                                                By {event.user} on {event.date}
+                                              </p>
+                                            </div>
+                                          </div>
+                                        ))}
+                                      </div>
+                                    </TabsContent>
+                                  </Tabs>
                                 </div>
                               </DialogContent>
                             </Dialog>
