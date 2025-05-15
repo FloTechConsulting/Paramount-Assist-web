@@ -53,7 +53,7 @@ const Hire = () => {
         { 
           name: "45-Tonne Excavator", 
           description: "Heavy-duty excavation capabilities",
-          image: "https://www.ridgwayrentals.com/wp-content/uploads/2020/09/Komatsu-PC-490-LC-45-Ton-Excavator-For-Sale-300x225.jpg"
+          image: "https://plantindex.co.za/wp-content/uploads/2022/05/340-Excavator-700x534.jpeg"
         },
       ]
     },
@@ -64,7 +64,7 @@ const Hire = () => {
         { 
           name: "Compact Wheel Loader", 
           description: "Versatile loader for tight spaces",
-          image: "https://images.pexels.com/photos/4486768/pexels-photo-4486768.jpeg"
+          image: "https://plantindex.co.za/wp-content/uploads/2022/05/cat-930M.jpeg"
         },
         { 
           name: "Medium Wheel Loader", 
