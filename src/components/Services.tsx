@@ -9,13 +9,13 @@ const Services = () => {
       title: 'Equipment Financing',
       description: 'Secure competitive financing for your mining equipment purchases with flexible repayment options tailored to your business needs.',
       link: '/finance',
-      buttonText: 'Apply Now',
+      
     },
     {
       title: 'Equipment Hire',
       description: 'Access our extensive fleet of mining equipment for short or long-term hire without the capital investment.',
       link: '/hire',
-      buttonText: 'Inquire Now',
+     
     },
   ];
 
