@@ -18,7 +18,7 @@ const Hero = () => {
           </div>
           <div className="hidden md:block animate-slide-in">
             <img 
-              src="https://plantindex.co.za/wp-content/uploads/2022/05/cat-320-700x700.png" 
+              src="https://passist.co.za/images/1920/10391857/balmoral.jpg" 
               alt="Mining Equipment" 
               className="w-full h-auto rounded-lg shadow-xl" 
             />
